@@ -81,6 +81,16 @@
         // retrieveExpressionModel :: String (angular expression) -> String
         let retrieveExpressionModel = R.compose(R.trim, R.replace('{{', ''), R.replace('}}', ''));
 
+        // IMPURE
+        // addCmsTextAttribute :: [Element] -> SIDE EFFECT
+        // get all angular expressions that contains $cms on the page
+        
+        let addCmsTextAttribute = R.curry(elements => {
+          R.forEach(element => {
+            element.setAttribute('c3-model', retrieveExpressionModel(element.innerText));
+          })(elements);
+        });
+
 
         ///////////////
         // c3-repeat //
@@ -108,13 +118,6 @@
         // cleanAfterSplit :: [String] -> [String]
         let cleanAfterSplit = R.compose(R.map(R.trim), R.reject(R.isEmpty));
 
-        // isRepeatModelObj :: String (ng-repeat value) -> Boolean
-        // Repeat model is either Object or Array
-        let isRepeatModelObj = R.compose(R.gt(R.__, -1), R.indexOf(','), R.head, cleanAfterSplit, R.split(' in '));
-
-        // retrieveRepeatItem :: String (ng-repeat value) -> String
-        let retrieveRepeatItem = R.compose(R.head, cleanAfterSplit, R.split(' in '));
-
         // retrieveRepeatItemKey :: String (ng-repeat value) -> String
         let retrieveRepeatItemKey = R.compose(R.head, cleanAfterSplit, R.split(','), R.trim, R.replace(')', ''), R.replace('(', ''), R.head, cleanAfterSplit, R.split(' in '));
 
@@ -124,82 +127,53 @@
         // retrieveRepeatModel :: String (ng-repeat value) -> String
         let retrieveRepeatModel = R.compose(R.trim, R.head, R.reject(R.isEmpty), R.split(' '), R.trim, R.last, R.split(' in '));
 
-        let repeatItemString = 
-
-        // startsWithItemString :: String -> Boolean
-        let startsWithItemString = R.compose(R.equals(0), R.indexOf(repeatItemString));
-
-        // endsWithObjNotationOrSpace :: String -> Boolean
-        let endsWithObjNotationOrSpace = R.compose(R.equals(repeatItemString), R.head, cleanAfterSplit, R.split(/[\s.\[]/));
-
-        // isValidRepeatItemString :: [String] -> Boolean
-        let isValidRepeatItemString = R.allPass([R.any(startsWithItemString), R.any(endsWithObjNotationOrSpace)]);
-
-        // handleTernary :: String -> [String]
-        let handleTernary = R.compose(cleanAfterSplit, R.split(':'), R.last, cleanAfterSplit, R.split('?'));
-
-        // hasRepeatItem :: String (ng expression) -> Boolean
-        let hasRepeatItem = R.compose(isValidRepeatItemString, cleanAfterSplit, R.chain(R.split(/[+*\-/%=<>^&|]/)), handleTernary, retrieveExpressionModel);
-
         // getNgExpressionElementsWithRepeatItem :: Element (repeat element) -> [Element]
-        let getNgExpressionElementsWithRepeatItem = R.compose(R.filter(hasRepeatItem), R.map(R.prop('innerText')), getInnerMostNgExpressionElements);
+        let getNgExpressionElementsWithRepeatItem = R.curry(repeatElement => {
 
-        // add
-
-
-
-
-
-
-
-        // // retrieveCmsRepeatModel :: String -> String
-        // let retrieveCmsRepeatModel = R.compose(R.head, R.filter(containsCms), R.split(' '), retrieveNgRepeatValue);
-
-        // // TODO: this breaks if it's an object
-        // // retrieveRepeatItem :: String (element) -> String
-        // // i.e. "item" in ng-repeat="item in list"
-        // let retrieveRepeatItem = R.curry(element => {
-        //   let ngRepeatValueArray = R.compose(R.reject(R.isEmpty), R.split(' '), retrieveNgRepeatValue)(element);
-        //   let indexOfItem = R.compose(R.dec, R.indexOf('in'))(ngRepeatValueArray);
-        //   return ngRepeatValueArray[indexOfItem];
-        // });
-
-        // // isNestedRepeatElement :: String (element) -> Boolean
-        // function isNestedRepeatElement (repeatElement) {
-        //   let innerRepeatElements = getNgRepeatElements(repeatElement);
-        //   if (innerRepeatElements.length < 1) { return false; }
+          let repeatValue = retrieveNgRepeatValue(repeatElement);
           
-        //   let repeatElementItem = retrieveRepeatItem(repeatElement);
-        //   return R.compose(R.contains(repeatElementItem), R.map(retrieveCmsRepeatModel))(innerRepeatElements);
-        // }
+          let repeatItemKeyString = retrieveRepeatItemKey(repeatValue);
+          let repeatItemValueString = retrieveRepeatItemValue(repeatValue);
 
-        // // getUnnestedCmsRepeatElements :: Element -> [Elements]
-        // let getUnnestedCmsRepeatElements = R.compose(R.reject(isNestedRepeatElement), R.filter(isCmsRepeatElement), getNgRepeatElements);
+          // startsWithItemString :: String -> Boolean
+          let startsWithItemString = R.either(R.compose(R.equals(0), R.indexOf(repeatItemValueString)), R.compose(R.equals(0), R.indexOf(repeatItemKeyString)));
+
+          // endsWithObjNotationOrSpace :: String -> Boolean
+          let endsWithObjNotationOrSpace = R.compose(R.either(R.equals(repeatItemValueString), R.equals(repeatItemKeyString)), R.head, cleanAfterSplit, R.split(/[\s.\[]/));
+
+          // isValidRepeatItemString :: [String] -> Boolean
+          let isValidRepeatItemString = R.allPass([R.any(startsWithItemString), R.any(endsWithObjNotationOrSpace)]);
+
+          // handleTernary :: String -> [String]
+          let handleTernary = R.compose(cleanAfterSplit, R.split(':'), R.last, cleanAfterSplit, R.split('?'));
+
+          // hasRepeatItem :: Element -> Boolean
+          let hasRepeatItem = R.compose(isValidRepeatItemString, log, cleanAfterSplit, R.chain(R.split(/[+*\-/%=<>^&|]/)), handleTernary, retrieveExpressionModel, R.prop('innerText'));
+
+          return R.compose(R.filter(hasRepeatItem), getInnerMostNgExpressionElements)(repeatElement);
+
+        });
+
+        // IMPURE
+        // addCmsRepeatAttribute :: [element] -> SIDE EFFECT
+        let addCmsRepeatAttribute = R.curry(elements => {
+          R.forEach(element => {
+            element.setAttribute('c3-model', R.compose(retrieveExpressionModel, R.prop('innerText'))(element));
+          })(elements);
+        });
+
+        // isInnerCmsRepeatElement :: Element -> Boolean
+        let isInnerCmsRepeatElement;
+
+        // getInnerCmsRepeatElements :: Element -> [Element]
+        let getInnerCmsRepeatElements = R.compose(R.filter(isCmsRepeatElement), getNgRepeatElements);
 
 
-        // //////////////////////
-        // // nested c3-repeat //
-        // //////////////////////
 
-        // // TODO: only goes into 2 layers - what if there's 3 or more?
 
-        // // getNestedCmsRepeatElements :: Element -> [Elements]
-        // let getNestedCmsRepeatElements = R.compose(R.filter(isNestedRepeatElement), R.filter(isCmsRepeatElement), getNgRepeatElements);
 
-        // // getInnerRepeatElements :: Element -> [Elements]
-        // let getInnerRepeatElements = R.curry(repeatElement => {
-        //   let innerRepeatElements = getNgRepeatElements(repeatElement);
-        //   let getOuterRepeatElementItem = retrieveRepeatItem(repeatElement);
-          
-        //   let getRepeatElementModel = R.compose(R.split(' '), retrieveNgRepeatValue);
-        //   let getInnerRepeatElementModel;
 
-        //   return R.compose(R.filter())(innerRepeatElements);
-        // });
 
-        // // getInnerCmsRepeatElements :: Element -> [Elements]
-        // let getInnerCmsRepeatElements = R.compose(R.unnest, R.map(getInnerRepeatElements), getNestedCmsRepeatElements);
-        // // result is doubled nested - i.e. [[],[]]
 
 
         // INIT - IMPURE //////////////////////////////////////////////////////////////////////////
@@ -228,11 +202,8 @@
         // c3-text //
         /////////////
 
-        // get all angular expressions that contains $cms on the page
         let cmsExpressionElements = getCmsExpressionElements(pageDOM);
-        R.forEach(element => {
-          element.setAttribute('c3-model', retrieveExpressionModel(element.innerText));
-        })(cmsExpressionElements);
+        addCmsTextAttribute(cmsExpressionElements);
         // console.log(getCmsExpressionElements(pageDOM));
 
 
@@ -241,9 +212,9 @@
         ///////////////
 
         var rootCmsRepeatElements = getRootCmsRepeatElements(pageDOM);
-        console.log(rootCmsRepeatElements[2]);
-        console.log(getInnerMostNgExpressionElements(rootCmsRepeatElements[2]));
-        console.log(getNgExpressionElementsWithRepeatItem(rootCmsRepeatElements[2]));
+        // console.log(rootCmsRepeatElements[2]);
+        // console.log(getInnerMostNgExpressionElements(rootCmsRepeatElements[2]));
+        console.log(getNgExpressionElementsWithRepeatItem(rootCmsRepeatElements[3]));
 
         // let cmsRepeatElements = getUnnestedCmsRepeatElements(pageDOM);
         // cmsRepeatElements.forEach(element => {

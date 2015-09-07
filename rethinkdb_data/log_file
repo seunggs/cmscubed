@@ -65,3 +65,4 @@
 2015-09-06T20:17:32.240298000 47185.905844s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
 2015-09-06T20:17:43.260295000 47196.926468s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
 2015-09-06T22:36:53.105839000 54499.101058s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-06T23:11:43.990833000 56552.887184s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.

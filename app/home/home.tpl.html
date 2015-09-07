@@ -12,7 +12,7 @@
 	<span ng-repeat="(key, item) in home.$cms.obj">{{key}}{{item}}</span>
 
 	<div ng-repeat="rows in home.$cms.matrix">
-		<span>{{$index}}</span>
+		<span>{{$index}}{{rows[$index]}}{{rows[$index+1]}}</span>
 		<span ng-repeat="col in rows">
 			<span>{{home.$cms.list2[$index]+col}}</span>
 			<span>{{$parent.$index}}{{$index}}</span>
@@ -22,7 +22,7 @@
 	<div ng-repeat="(key, rows) in home.$cms.matrixObj">
 		<span>{{key}}</span>
 		<span ng-repeat="col in rows">
-			<span>{{col}}</span>
+			<span>{{col}}{{rows[$index]}}</span>
 		</span>
 	</div>
 
