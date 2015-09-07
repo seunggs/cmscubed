@@ -1,0 +1,20 @@
+.bg-gradient-home {
+	background: linear-gradient(to bottom, rgba(17,2,49,0.75), rgba(17,2,49,0)), linear-gradient(to top right, #eb6670, #f67f7c, #f9ac97, #f1b79f, #e1bea7, #c3bcb0, #8aabb2, #4e95b2, #2588b6);
+}
+
+.bg-gradient-navy {
+	background: radial-gradient(circle farthest-corner at 100% 170%, #52F6FF 0%, #06294F 100%);
+}
+
+.bg-lighten-1 { background-color: $lighten-2 }
+.bg-lighten-2 { background-color: $lighten-3 }
+.bg-lighten-3 { background-color: $lighten-4 }
+.bg-lighten-4 { background-color: $lighten-5 }
+
+.bg-dark-gray { background-color: $dark-gray }
+.bg-near-black { background-color: $near-black }
+.bg-pink { background-color: $pink }
+.bg-light-green { background-color: $light-green }
+.bg-yellow-green { background-color: $yellow-green }
+.bg-light-red { background-color: $light-red }
+

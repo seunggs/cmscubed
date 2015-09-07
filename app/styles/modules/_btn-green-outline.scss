@@ -1,0 +1,34 @@
+.btn-green-outline {
+  color: $green;
+  background-color: transparent;
+  border-radius: $button-border-radius;
+  border: $border-width solid $green;
+  -webkit-transition-duration: .1s;
+          transition-duration: .1s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
+  -webkit-transition-property: box-shadow, background-color;
+          transition-property: box-shadow, background-color;
+}
+  
+.btn-green-outline:hover,
+.btn-green-outline.is-active {
+  color: white;
+  background-color: $green;
+}
+
+.btn-green-outline:active {
+  box-shadow: inset 0 3px 3px 0 rgba(#000,.25);
+}
+
+.btn-green-outline:focus {
+  color: white;
+  background-color: $green;
+}
+
+.btn-green-outline:disabled,
+.btn-green-outline.is-disabled {
+  color: $green;
+  background-color: transparent;
+  opacity: .5;
+}

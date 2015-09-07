@@ -1,0 +1,21 @@
+.btn-sm {
+	padding: $button-sm-padding-y $button-sm-padding-x;
+}
+
+.btn-md {
+	padding: $button-md-padding-y $button-md-padding-x;
+}
+
+.btn-lg {
+	padding: $button-lg-padding-y $button-lg-padding-x;
+}
+
+.btn-form {
+	padding: $button-form-padding-y $button-form-padding-x;
+	height: $button-form-height;
+}
+
+.btn-narrow {
+  padding-left: $button-narrow-padding-x;
+  padding-right: $button-narrow-padding-x;
+}

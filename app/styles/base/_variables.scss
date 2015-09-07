@@ -1,0 +1,104 @@
+$aqua: #7fdbff !default;
+$blue: #00A2DD !default;
+$dark-blue: #0088B9 !default;
+$navy: #001f3f !default;
+$teal: #39cccc !default;
+$light-green: #D3F0D7 !default;
+$yellow-green: #B5DC0A !default;
+$green: #2ecc40 !default;
+$olive: #3d9970 !default;
+$lime: #01ff70 !default;
+$yellow: #ffdc00 !default;
+$orange: #ff851b !default;
+$light-red: #FFE9E7 !default;
+$red: #ff4136 !default;
+$pink: #F00051 !default;
+$fuchsia: #f012be !default;
+$purple: #b10dc9 !default;
+$maroon: #85144b !default;
+$white: #fff !default;
+$silver: #ddd !default;
+$gray: #aaa !default;
+$dark-gray: #888 !default;
+$near-black: #333 !default;
+$black: #111 !default;
+$ruby: #E8443B !default;
+
+
+$font-family: 'freight-sans-pro', sans-serif !default;
+$body-font-size: 110% !default;
+$body-font-weight: 300 !default;
+$body-letter-spacing: 0.025rem !default;
+$heading-font-weight: 300 !default;
+$light-font-weight: 300 !default;
+$bold-font-weight: 500 !default;
+$h00: 4.5rem !default;
+$h0: 3.5rem !default;
+$h1: 2.5rem !default;
+$h2: 1.8rem !default;
+$h3: 1.5rem !default;
+$h4: 1.25rem !default;
+$h5: 1rem !default;
+$h6: .875rem !default;
+$space-1: .5rem !default;
+
+$darken-1: rgba(0,0,0,.0625) !default;
+$darken-2: rgba(0,0,0,.125) !default;
+$darken-3: rgba(0,0,0,.25) !default;
+$darken-4: rgba(0,0,0,.5) !default;
+
+$lighten-1: rgba(255,255,255,.1) !default;
+$lighten-2: rgba(255,255,255,.2) !default;
+$lighten-3: rgba(255,255,255,.3) !default;
+$lighten-4: rgba(255,255,255,.5) !default;
+$lighten-5: rgba(255,255,255,.7) !default;
+
+$container-width: 60em !default;
+$container-width-sm: 45em !default;
+
+$link-color: $blue !default;
+$link-hover-color: $dark-blue !default;
+$link-text-decoration: none !default;
+$link-hover-text-decoration: none !default;
+$link-opacity: 0.8;
+$link-hover-opacity: 1;
+
+$button-font-weight: 300 !default;
+$button-border-radius: 0 !default;
+$button-background-color: $blue !default;
+$button-padding-y: .8rem !default;
+$button-padding-x: 1.1rem !default;
+$button-sm-padding-y: .25rem !default;
+$button-sm-padding-x: .5rem !default;
+$button-md-padding-y: .5rem !default;
+$button-md-padding-x: .8rem !default;
+$button-lg-padding-y: 1rem !default;
+$button-lg-padding-x: 1.25rem !default;
+$button-form-padding-y: 0.6rem !default;
+$button-form-padding-x: 0.9rem !default;
+$button-form-height: 2.75rem !default;
+$button-narrow-padding-x: $space-1 !default;
+$button-font-letter-spacing: 0.025rem !default;
+$button-color: $white !default;
+
+$form-field-font-size: 1rem !default;
+$form-field-height: 2.75rem !default;
+$form-field-padding-y: .5rem !default;
+$form-field-padding-x: 0.9rem !default;
+$form-field-border-width: 1px !default;
+$form-field-border-radius: 4px !default;
+$field-focus-color: $blue !default;
+
+$search-form-field-width: 15rem !default;
+$search-form-field-width-expanded: 20rem !default;
+$search-form-field-height: 2.15rem !default;
+$search-form-field-border-color: transparent !default;
+$search-form-field-border-radius: 100px !default;
+
+$label-font-size: 0.9rem !default;
+$label-font-color: $gray !default;
+$label-font-weight: 500 !default;
+$file-input-padding-y: .6rem !default;
+$file-input-padding-x: 0.9rem !default;
+$file-input-color: $blue;
+$file-input-hover-color: $dark-blue;

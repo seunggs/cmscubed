@@ -1,0 +1,75 @@
+// fadeInUp
+
+.ng-animation-fadeInUp.ng-enter,
+.ng-animation-fadeInUp.ng-leave,
+.ng-animation-fadeInUp.ng-move {
+  transition: 0.5s all;
+}
+
+.ng-animation-fadeInUp.ng-enter-stagger,
+.ng-animation-fadeInUp.ng-leave-stagger,
+.ng-animation-fadeInUp.ng-move-stagger {
+  transition-delay: 100ms;
+  /* this is required here to prevent any CSS inheritance issues */
+  transition-duration: 0;
+}
+
+.ng-animation-fadeInUp.ng-enter,
+.ng-animation-fadeInUp.ng-move { 
+  opacity: 0;
+  transform: translate3d(0, 50%, 0);
+}
+
+.ng-animation-fadeInUp.ng-enter.ng-enter-active,
+.ng-animation-fadeInUp.ng-move.ng-move-active { 
+  opacity: 1;
+  transform: none;
+}
+
+.ng-animation-fadeInUp.ng-leave { 
+  opacity: 1;
+  transform: none;
+}
+
+.ng-animation-fadeInUp.ng-leave.ng-leave-active { 
+  opacity: 0;
+  transform: translate3d(0, 50%, 0);
+}
+
+// fadeInDown
+
+.ng-animation-fadeInDown.ng-enter,
+.ng-animation-fadeInDown.ng-leave,
+.ng-animation-fadeInDown.ng-move {
+  transition: 0.5s all;
+}
+
+.ng-animation-fadeInDown.ng-enter-stagger,
+.ng-animation-fadeInDown.ng-leave-stagger,
+.ng-animation-fadeInDown.ng-move-stagger {
+  transition-delay: 100ms;
+  /* this is required here to prevent any CSS inheritance issues */
+  transition-duration: 0;
+}
+
+.ng-animation-fadeInDown.ng-enter,
+.ng-animation-fadeInDown.ng-move { 
+  opacity: 0;
+  transform: translate3d(0, -50%, 0);
+}
+
+.ng-animation-fadeInDown.ng-enter.ng-enter-active,
+.ng-animation-fadeInDown.ng-move.ng-move-active { 
+  opacity: 1;
+  transform: none;
+}
+
+.ng-animation-fadeInDown.ng-leave { 
+  opacity: 1;
+  transform: none;
+}
+
+.ng-animation-fadeInDown.ng-leave.ng-leave-active { 
+  opacity: 0;
+  transform: translate3d(0, -50%, 0);
+}

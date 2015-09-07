@@ -1,0 +1,12 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/*",
+    "app",
+    "bower_components",
+    "e2e",
+    "gulp",
+    "rethinkdb_data"
+  ]
+}

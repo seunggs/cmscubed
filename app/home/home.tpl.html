@@ -1,0 +1,31 @@
+<div class="container" c3-page>
+
+	<h2>home</h2>
+	<p>{{home.$cms.text}}</p>
+
+	<p>{{ home.$cms.text2 }}</p>
+
+	<p>{{home.$cms.text}} and <span>{{home.$cms.text2}}</span></p>
+
+	<span ng-repeat="item in home.$cms.list">{{item}}</span>
+
+	<span ng-repeat="(key, item) in home.$cms.obj">{{key}}{{item}}</span>
+
+	<div ng-repeat="rows in home.$cms.matrix">
+		<span>{{$index}}</span>
+		<span ng-repeat="col in rows">
+			<span>{{home.$cms.list2[$index]+col}}</span>
+			<span>{{$parent.$index}}{{$index}}</span>
+		</span>
+	</div>
+
+	<div ng-repeat="(key, rows) in home.$cms.matrixObj">
+		<span>{{key}}</span>
+		<span ng-repeat="col in rows">
+			<span>{{col}}</span>
+		</span>
+	</div>
+
+	<input name="text" placeholder="{{ home.$cms.text }}">
+
+</div>

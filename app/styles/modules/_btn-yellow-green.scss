@@ -1,0 +1,20 @@
+.btn-yellow-green {
+  color: $button-color;
+  background-color: $yellow-green;
+  border-radius: $button-border-radius;
+}
+
+.btn-yellow-green:hover {
+  box-shadow: inset 0 0 0 20rem $darken-1;
+}
+
+.btn-yellow-green:active {
+  box-shadow: inset 0 0 0 20rem $darken-2,
+    inset 0 3px 4px 0 $darken-3,
+    0 0 1px $darken-2;
+}
+
+.btn-yellow-green:disabled,
+.btn-yellow-green.is-disabled {
+  opacity: .5;
+}

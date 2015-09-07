@@ -1,0 +1,10 @@
+.btn {
+  letter-spacing: $button-font-letter-spacing;
+  border-radius: $button-border-radius;
+}
+
+.btn:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: none;
+}
