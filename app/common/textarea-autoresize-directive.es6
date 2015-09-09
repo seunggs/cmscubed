@@ -51,25 +51,37 @@
         let log = x => { console.log(x); return x; };
 
         // getMeasurementElement :: Element -> Element
-        let getMeasurementElement = R.curry(element => { return element.next()[0]; });
+        let getMeasurementElement = R.compose(R.head, R.invoker(0, 'next'));
 
-        // getTextareaTextWidth :: Element -> Integer
+        // getWindowWidth :: Window -> Integer
+        let getWindowWidth = R.compose(R.prop('innerWidth'));
+
+        // getWindowHeight :: Window -> Integer
+        let getWindowHeight = R.compose(R.prop('innerHeight'));
+
+        // getElementRect :: Element -> {a}
+        let getElementRect = R.compose(R.invoker(0, 'getBoundingClientRect'), R.head);
+
+        // getElementTopPosition :: Element -> Integer
+        let getElementTopPosition = R.compose(R.prop('top'), getElementRect);
+
+        // getElementLeftPosition :: Element -> Integer
+        let getElementLeftPosition = R.compose(R.prop('left'), getElementRect);
+
+        // getTextareaTextMaxWidth :: Window -> Integer
+        // let getTextareaTextMaxWidth = R.compose(R.prop('innerWidth'));
+
+        // getTextareaTextMaxHeight :: Window -> Integer
+        // let getTextareaTextMaxHeight = R.compose(R.prop('innerHeight'));
+
+        // getTextareaTextWidth :: Element (measurement element) -> Integer
         let getTextareaTextWidth = R.compose(R.add(textareaPaddingX), R.prop('offsetWidth'), getMeasurementElement);
 
-        // getTextareaTextHeight :: Element -> Integer
-        let getTextareaTextHeight = R.curry(() => {
+        // getTextareaTextHeight :: Element (measurement element) -> Integer
+        let getTextareaTextHeight = R.curry(element => {
           // calculate # of lines based on span width and textarea max-width
           // 2 * lines = height
-        });
-
-        // getTextareaTextMaxWidth ::  
-        let getTextareaTextMaxWidth = R.curry(() => {
-          // put an invisible fixed positioned 100% sized element and get the width - make it real-time?
-        });
-
-        // getTextareaTextMaxHeight :: 
-        let getTextareaTextMaxHeight = R.curry(() => {
-
+          return 
         });
 
 
@@ -103,6 +115,9 @@
 
         // MAIN - IMPURE //////////////////////////////////////////////////////////////////////////////
         
+        console.log(element[0].getBoundingClientRect());
+        console.log(getElementLeftPosition(element));
+
         // initialize width and height of the textarea
         setTextareaSize(element);
 
