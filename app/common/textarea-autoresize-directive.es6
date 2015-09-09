@@ -43,7 +43,7 @@
 
         let maxTextareaWidth = 20;
         let maxTextareaHeight = 15;
-        let textareaPaddingX = 64; // px
+        let textareaPaddingX = 40; // px
         // let textareaPaddingY = 20; // px
 
         // PURE ///////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,21 @@
         let getTextareaTextWidth = R.compose(R.add(textareaPaddingX), R.prop('offsetWidth'), getMeasurementElement);
 
         // getTextareaTextHeight :: Element -> Integer
-        // let getTextareaTextHeight = R.compose(R.add(textareaPaddingY), R.prop('offsetHeight'), getMeasurementElement);
+        let getTextareaTextHeight = R.curry(() => {
+          // calculate # of lines based on span width and textarea max-width
+          // 2 * lines = height
+        });
+
+        // getTextareaTextMaxWidth ::  
+        let getTextareaTextMaxWidth = R.curry(() => {
+          // put an invisible fixed positioned 100% sized element and get the width - make it real-time?
+        });
+
+        // getTextareaTextMaxHeight :: 
+        let getTextareaTextMaxHeight = R.curry(() => {
+
+        });
+
 
         // IMPURE /////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,11 +84,11 @@
         // setTextareaSize :: Element -> SIDE EFFECT
         let setTextareaSize = R.curry(element => {
           let textareaTextWidth = getTextareaTextWidth(element);
-          // let textareaTextHeight = getTextareaTextHeight(element);
+          let textareaTextHeight = getTextareaTextHeight(element);
           // console.log(textareaTextWidth);
           // element[0].setAttribute('style', 'width: ' + textareaTextWidth + 'px; ' + 'height: 2em');
-          element[0].style.width = textareaTextWidth + 'px';
-          element[0].style.height = '2em';
+          element[0].style.width = String(textareaTextWidth) + 'px';
+          element[0].style.height = String(textareaTextHeight) + 'em';
         });
 
 
@@ -82,7 +96,7 @@
   
         // add an invisible span element to use in measuring width and height of text in textarea
         let measurementElement = $window.document.createElement('span');
-        measurementElement.setAttribute('class', 'absolute invisible');
+        measurementElement.setAttribute('style', 'position: absolute; visibility: hidden; white-space: nowrap');
         measurementElement.innerText = scope.ngModel;
         element[0].parentNode.insertBefore(measurementElement, element[0].nextSibling);
 
