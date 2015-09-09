@@ -10,7 +10,6 @@
 @import 'modules/colors';
 @import 'modules/background-colors';
 
-@import 'modules/utility-layout';
 @import 'modules/utility-typography';
 
 @import 'modules/border-colors';
@@ -34,13 +33,16 @@
 
 @import 'modules/positions';
 @import 'modules/flex-object';
+@import 'modules/visibility';
 
 @import 'modules/animate';
 @import 'modules/transitions';
 @import 'modules/ng-animate';
 
 // custom modules unique to this project
+@import 'custom/hover';
 @import 'custom/textarea';
+@import 'custom/bubble';
 
 // external modules
 @import 'external/pagination';

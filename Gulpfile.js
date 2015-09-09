@@ -54,6 +54,7 @@ for (key in gulpFiles) {
 gulp.task('dev', ['build'], function () {
   gulp.start('browserSync');
   gulp.start('watch');
+  gulp.start('nodemon');
 });
 
 gulp.task('default', ['dev']);

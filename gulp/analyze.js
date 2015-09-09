@@ -17,7 +17,7 @@ module.exports = function (gulp, $, config) {
         })(err);
 
         this.emit('end');
-      }}))
+      }}));
   });
 
   // run plato anaylysis on JavaScript (ES5) files

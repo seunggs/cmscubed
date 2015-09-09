@@ -17,4 +17,14 @@ module.exports = function (gulp, $, config) {
     gulp.watch([config.unitTestFiles], ['unitTest']);
     gulp.watch([config.appFiles, '!' + config.unitTestFiles], ['build', $.browserSync.reload]);
   });
+
+  gulp.task('nodemon', function () {
+    $.nodemon({ script: 'server.js'
+            , watch: ['server']
+            , ignore: []
+            , tasks: ['lint'] })
+      .on('restart', function () {
+        console.log('restarted!');
+      });
+  });
 };

@@ -28,7 +28,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(methodOverride('X-HTTP-Method-Override')); 
 app.use(express.static(__dirname + '/build/app')); 
-app.use(favicon(__dirname + '/build/app/images/favicon/favicon.ico'));
+app.use(favicon(__dirname + '/build/app/images/favicon/cmscubed-favicon.ico'));
 
 // set up passport
 require('./server/config/passport')(passport); // pass passport for configuration

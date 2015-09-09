@@ -1,11 +1,16 @@
-.cmscubed.textarea {
-	font: inherit;
-	font-weight: inherit;
-	line-height: inherit;
-	color: inherit;
-	padding: inherit;
+.c3.textarea {
+	font-size: 1.1rem;
+  font-weight: $body-font-weight;
+  letter-spacing: $body-letter-spacing;
+  line-height: $line-height;
+	color: $near-black;
+	padding: 0.6rem 0.8rem;
 	background-color: transparent;
 	border: none;
 	resize: none;
 	outline: none;
+	margin: 0;
+	min-width: 4rem;
+	min-height: 2rem;
+	overflow-y: hidden;
 }
