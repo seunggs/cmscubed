@@ -1,1 +1,23 @@
-<textarea></textarea>
+<div class="c3 flex textarea-autoresize-root">
+
+	<!-- editor -->
+<!-- 	<div class="c3 editor flex">
+    <button type="button" ng-click="textareaAutoresize.doSomething()" class="btn btn-near-white btn-sm m0"><div class="italic h4" style="width: 14px; height: 19px;"><div style="margin-top: -1px;">B</div></div></button>
+    <button type="button" ng-click="textareaAutoresize.doSomething()" class="btn btn-near-white btn-sm m0"><span class="ti-Italic h6"></span></button>
+    <button type="button" ng-click="textareaAutoresize.doSomething()" class="btn btn-near-white btn-sm m0"><span class="ti-underline h6"></span></button>
+    <button type="button" ng-click="textareaAutoresize.doSomething()" class="btn btn-near-white btn-sm m0"><span class="ti-link h6"></span></button>
+	</div>
+ -->	<!-- end: editor -->
+
+	<!-- textarea -->
+	<p class="c3 textarea flex-auto" ng-model="c3Model" medium-editor options='{"buttons": ["bold", "italic", "underline", "anchor"], "buttonLabels": "fontawesome"}'></p>
+	<!-- 	<div contenteditable  ng-trim="false" ng-model="c3Model">{{c3Model}}</div> -->
+	<!-- textarea -->
+
+	<!-- invisible measurement element -->
+	<div class="flex" style="position: absolute; visibility: hidden; margin: 0; padding: 0; width: 100%">
+		<div class="measurement"></div>
+	</div>
+	<!-- invisible measurement element -->
+
+</div>

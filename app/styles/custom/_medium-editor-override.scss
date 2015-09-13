@@ -1,0 +1,81 @@
+$medium-editor-bg-color: #444;
+$medium-editor-font-color: $white;
+$medium-editor-button-hover-color: #111;
+$medium-editor-button-active-color: $dark-blue;
+$medium-editor-border-radius: 0;
+
+.medium-toolbar-arrow-under:after {
+  top: 34px;
+  border-color: $medium-editor-bg-color transparent transparent transparent; 
+}
+
+.medium-toolbar-arrow-over:before {
+  top: -8px;
+  border-color: transparent transparent $medium-editor-bg-color transparent; 
+}
+
+.medium-editor-toolbar {
+  border: none;
+  background: $medium-editor-bg-color;
+  border-radius: $medium-editor-border-radius;
+  box-shadow: none;
+}
+
+.medium-editor-toolbar li button {
+  min-width: 0;
+  height: auto;
+  border: 0;
+  background-color: $medium-editor-bg-color;
+  color: $medium-editor-font-color;
+  background: transparent;
+  box-shadow: none;
+  &:hover {
+    background-color: $medium-editor-button-hover-color;
+    font: $medium-editor-font-color;
+  }
+}
+
+.medium-editor-toolbar li button, .medium-editor-anchor-preview li button {
+  padding: $button-md-padding-y $button-md-padding-x;
+}
+
+.medium-editor-toolbar li .medium-editor-button-first {
+  border-top-left-radius: $medium-editor-border-radius;
+  border-bottom-left-radius: $medium-editor-border-radius; 
+}
+
+.medium-editor-toolbar li .medium-editor-button-last {
+  border-top-right-radius: $medium-editor-border-radius;
+  border-bottom-right-radius: $medium-editor-border-radius; 
+}
+
+.medium-editor-toolbar li .medium-editor-button-active {
+  background: $medium-editor-button-active-color;
+  font: $medium-editor-font-color;
+}
+
+.medium-editor-toolbar-form {
+  background: $medium-editor-bg-color;
+  color: #999;
+  border-radius: $medium-editor-border-radius; }
+
+.medium-editor-toolbar-form .medium-editor-toolbar-input {
+  height: 50px;
+  background: $medium-editor-bg-color;
+  color: #ccc;
+  box-sizing: border-box; 
+}
+
+.medium-editor-toolbar-form a {
+  color: #fff; 
+}
+
+.medium-editor-toolbar-anchor-preview {
+  background: $medium-editor-bg-color;
+  color: #fff;
+  border-radius: $medium-editor-border-radius; 
+}
+
+.medium-editor-placeholder:after {
+  color: #b3b3b1; 
+}

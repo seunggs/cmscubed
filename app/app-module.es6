@@ -9,9 +9,11 @@
   angular
     .module('cmscubed', [
       'ui.router',
+      'ngSanitize',
+      'ramda',
+      'angular-medium-editor',
       'home',
-      'common',
-      'ramda'
+      'common'
     ]);
 
   // ramda module

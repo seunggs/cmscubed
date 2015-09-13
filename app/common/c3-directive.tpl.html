@@ -1,18 +1,16 @@
 <span ng-transclude class="c3 hover" ng-click="c3.openBubble()"></span>
 
 <!-- overlay -->
-<div class="fixed top-0 right-0 bottom-0 left-0" style="z-index: 9999" ng-show="c3.bubbleVisible" ng-click="c3.closeBubble()">
+<!-- <div class="bubble-overlay fixed top-0 right-0 bottom-0 left-0" style="z-index: 9999" ng-show="c3.bubbleVisible" ng-click="c3.closeBubble()">
 </div>
-<!-- end: overlay -->
+ --><!-- end: overlay -->
 
 <!-- bubble -->
-<div class="c3 bubble" style="z-index: 10000" ng-show="c3.bubbleVisible" >
-  <form ng-submit="" class="flex flex-start">
-    <textarea class="c3 textarea flex-auto" ng-model="c3Model" autofocus></textarea>
-    <div style="width: 6rem" class="flex">
-      <button class="btn btn-green btn-sm ml1 mt1 mb1" type="submit"><span class="ti-check"></span></button>
-      <button class="btn btn-red-outline btn-sm m1" type="button" ng-click="c3.closeBubble()"><span class="ti-close"></span></button>
-    </div>
-  </form>
+<div class="c3 bubble flex flex-start" style="z-index: 1000" ng-show="c3.bubbleVisible">
+	<textarea-autoresize class="flex-auto" ng-model="c3Model"></textarea-autoresize>
+  <div style="width: 5.6rem" class="flex">
+    <button class="btn btn-green btn-sm ml1 mt1 mb1" type="button" ng-click="c3.submit()" ng-enter="c3.submit()"><span class="ti-check"></span></button>
+    <button class="btn btn-red-outline btn-sm m1" type="button" ng-click="c3.closeBubble()"><span class="ti-close"></span></button>
+  </div>
 </div>
 <!-- end: bubble -->

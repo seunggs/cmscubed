@@ -3,21 +3,42 @@
 	<h2>home</h2>
 	<p>{{home.$cms.text}}<span style="visibility: hidden">Hello</span><span>test</span></p>
 
-	<p>{{ home.$cms.text2 }}</p>
+	<div class="flex flex-justify">
+		<p>{{ home.$cms.text }}</p>
+		<p>{{ home.$cms.text2 }}</p>
+	</div>
 
 	<p>{{home.$cms.text}} and <span>{{home.$cms.text2}}</span></p>
 
-<!-- 	<span ng-repeat="item in home.$cms.list">{{item}}</span>
+	<span>
+	hello<br>
+	what
+	</span>
 
-	<span ng-repeat="(key, item) in home.$cms.obj">{{key}}{{item}}</span>
- -->
+	<p>
+	<p>
+	hello
+	what
+	</p>
+	</p>
+
 	<div ng-repeat="(key, rows) in home.$cms.matrixObj">
 		<span ng-repeat="col in rows">
 			{{col}}
 		</span>
 	</div>
 
-	<span class="relative">hello<div class="c3 bubble bubble--bottom muted-0 visible flex flex-start"><textarea textarea-autoresize class="c3 textarea flex-auto" ng-model="home.$cms.text"></textarea><span style="width: 6rem"><button class="btn btn-green btn-sm ml1 mt1 mb1" type="button"><span class="ti-check"></span></button><button class="btn btn-red-outline btn-sm m1" type="button"><span class="ti-close"></span></button></span></div></span>
+<!-- 	<div class="flex flex-justify">
+		<span class="relative">hello<div class="c3 bubble bubble--top-left muted-0 visible flex flex-start"><textarea textarea-autoresize class="c3 textarea flex-auto" ng-model="home.$cms.text" ng-trim="false"></textarea><span style="width: 5.6rem"><button class="btn btn-green btn-sm ml1 mt1 mb1" type="button"><span class="ti-check"></span></button><button class="btn btn-red-outline btn-sm m1" type="button"><span class="ti-close"></span></button></span></div></span>
+
+		<span class="relative">hello<div class="c3 bubble bubble--top-left muted-0 visible flex flex-start"><textarea textarea-autoresize class="c3 textarea flex-auto" ng-model="home.$cms.text" ng-trim="false"></textarea><span style="width: 5.6rem"><button class="btn btn-green btn-sm ml1 mt1 mb1" type="button"><span class="ti-check"></span></button><button class="btn btn-red-outline btn-sm m1" type="button"><span class="ti-close"></span></button></span></div></span>
+	</div>
+ -->
+<!-- 	<span ng-repeat="item in home.$cms.list">{{item}}</span>
+
+	<span ng-repeat="(key, item) in home.$cms.obj">{{key}}{{item}}</span>
+ -->
+
 
 <!-- 	<div ng-repeat="rows in home.$cms.matrix">
 		<span>{{$index}}{{rows[$index]}}{{rows[$index+1]}}</span>
@@ -33,7 +54,7 @@
 			<span>{{col}}{{rows[$index]}}</span>
 		</span>
 	</div>
- -->
-	<input name="text" placeholder="{{ home.$cms.text }}">
 
+	<input name="text" placeholder="{{ home.$cms.text }}">
+ -->
 </div>

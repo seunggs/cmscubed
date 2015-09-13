@@ -1,9 +1,7 @@
 .c3.bubble {
 	position: absolute;
-	top: 36px;
-	left: -10px;
 	background-color: $white;
-	min-width: 2rem;
+	min-width: 14rem;
 	min-height: 1.5rem;
 	padding: 0;
 	border-radius: 3px;
@@ -11,20 +9,39 @@
 	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.05);
 }
 
-.c3.bubble--top:before {
-	content: url('../../images/icons/bubble-tip-down.svg');
-	width: 24px;
-	height: 12px;
-	position: absolute;
-	left: 20px;
-	bottom: -4px;
-}
-
-.c3.bubble--bottom:before {
+.c3.bubble--top-left:before {
 	content: url('../../images/icons/bubble-tip-up.svg');
 	width: 24px;
 	height: 12px;
 	position: absolute;
-	left: 16px;
+	left: 12px;
 	top: -20px;
 }
+
+.c3.bubble--top-right:before {
+	content: url('../../images/icons/bubble-tip-up.svg');
+	width: 24px;
+	height: 12px;
+	position: absolute;
+	right: 12px;
+	top: -20px;
+}
+
+.c3.bubble--bottom-left:before {
+	content: url('../../images/icons/bubble-tip-down.svg');
+	width: 24px;
+	height: 12px;
+	position: absolute;
+	left: 12px;
+	bottom: -4px;
+}
+
+.c3.bubble--bottom-right:before {
+	content: url('../../images/icons/bubble-tip-down.svg');
+	width: 24px;
+	height: 12px;
+	position: absolute;
+	right: 12px;
+	bottom: -4px;
+}
+

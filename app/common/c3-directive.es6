@@ -25,7 +25,8 @@
     return {
       restrict: 'A',
       scope: {
-        c3Model: '='
+        c3Model: '=?',
+        c3RepeatModel: '=?'
       },
       templateUrl: 'common/c3-directive.tpl.html',
       replace: false,
@@ -49,6 +50,9 @@
         // if (attrs.c3RootRepeat !== undefined) {
         //   textareaElement[0].setAttribute('c3-repeat-model', attrs.c3RootRepeat);
         // }
+        if (!scope.c3Model) { return; }
+        // console.log('scope.c3Model: ', scope.c3Model);
+
       }
     };
   }
