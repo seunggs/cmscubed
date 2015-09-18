@@ -4,12 +4,6 @@
 var express = require('express');
 var router = express.Router();
 var r = require('../config/rdbdash');
-var R = require('ramda');
-var p = require('bluebird');
-var rp = require('request-promise');
-var keys = require('../config/keys');
-
-// helper functions ///////////////////////////////////////////////////
 
 
 // Users routes ///////////////////////////////////////////////////////
@@ -62,5 +56,6 @@ router.route('/users/:userId')
 			});
 	});
 
+//
 
 module.exports = router;

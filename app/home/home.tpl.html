@@ -1,10 +1,10 @@
 <div class="container" c3-page>
 
-	<h2>home</h2>
-	<p>{{home.$cms.text}}<span style="visibility: hidden">Hello</span><span>test</span></p>
+	<h2 c3-text="heroHeading">home</h2>
+	<p>{{home.$cms.text}}<span>{{home.$cms.text2}}</span></p>
 
-	<div class="flex flex-justify">
-		<p>{{ home.$cms.text }}</p>
+<!-- 	<div class="flex flex-justify">
+		<div>{{ home.$cms.text }}</div>
 		<p>{{ home.$cms.text2 }}</p>
 	</div>
 
@@ -27,7 +27,7 @@
 			{{col}}
 		</span>
 	</div>
-
+ -->
 <!-- 	<div class="flex flex-justify">
 		<span class="relative">hello<div class="c3 bubble bubble--top-left muted-0 visible flex flex-start"><textarea textarea-autoresize class="c3 textarea flex-auto" ng-model="home.$cms.text" ng-trim="false"></textarea><span style="width: 5.6rem"><button class="btn btn-green btn-sm ml1 mt1 mb1" type="button"><span class="ti-check"></span></button><button class="btn btn-red-outline btn-sm m1" type="button"><span class="ti-close"></span></button></span></div></span>
 

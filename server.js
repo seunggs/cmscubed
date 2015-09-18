@@ -5,6 +5,7 @@ require('dotenv').load();
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -17,7 +18,7 @@ var favicon = require('serve-favicon');
 var config = require('./server/config/default');
 
 
-// configuration ================================================
+/* --- configuration ----------------------------------------------- */
 var port = config.port;
 
 // set up express
@@ -43,10 +44,19 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
 
-// routes ========================================================
+/* --- routes ------------------------------------------------------ */
 app.use('/', require('./server/routes'));
 
 
-// start app =====================================================
+/* --- start scoket.io --------------------------------------------- */
+io.on('connection', function(socket){
+  console.log('user connected');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
+require('./router/socket')(io);
+
+/* --- start app --------------------------------------------------- */
 server.listen(port);
 console.log('Listening on port: ', port);

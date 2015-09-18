@@ -2,7 +2,7 @@ $medium-editor-bg-color: #444;
 $medium-editor-font-color: $white;
 $medium-editor-button-hover-color: #111;
 $medium-editor-button-active-color: $dark-blue;
-$medium-editor-border-radius: 0;
+$medium-editor-border-radius: 2px;
 
 .medium-toolbar-arrow-under:after {
   top: 34px;
@@ -36,7 +36,7 @@ $medium-editor-border-radius: 0;
 }
 
 .medium-editor-toolbar li button, .medium-editor-anchor-preview li button {
-  padding: $button-md-padding-y $button-md-padding-x;
+  padding: $button-md-padding-y 0.6rem;
 }
 
 .medium-editor-toolbar li .medium-editor-button-first {
@@ -57,10 +57,14 @@ $medium-editor-border-radius: 0;
 .medium-editor-toolbar-form {
   background: $medium-editor-bg-color;
   color: #999;
-  border-radius: $medium-editor-border-radius; }
+  border-radius: $medium-editor-border-radius; 
+  padding: 0 0.5rem;
+  margin-top: -6px;
+}
 
 .medium-editor-toolbar-form .medium-editor-toolbar-input {
-  height: 50px;
+  font-family: 'freight-sans-pro', sans-serif !important;
+  height: 2.5rem;
   background: $medium-editor-bg-color;
   color: #ccc;
   box-sizing: border-box; 
@@ -71,9 +75,12 @@ $medium-editor-border-radius: 0;
 }
 
 .medium-editor-toolbar-anchor-preview {
+  font-family: 'freight-sans-pro', sans-serif !important;
   background: $medium-editor-bg-color;
   color: #fff;
+  padding: 0 0.5rem 0 0.3rem;
   border-radius: $medium-editor-border-radius; 
+  text-decoration: none !important;
 }
 
 .medium-editor-placeholder:after {

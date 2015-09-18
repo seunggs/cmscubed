@@ -16,7 +16,6 @@
     "express": "~4.5.1",
     "express-session": "^1.11.3",
     "method-override": "~2.0.2",
-    "moment": "^2.10.6",
     "morgan": "^1.6.1",
     "passport": "~0.1.17",
     "passport-google-oauth": "^0.1.5",

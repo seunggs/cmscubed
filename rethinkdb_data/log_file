@@ -80,3 +80,21 @@
 2015-09-09T13:38:10.782518000 0.440075s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
 2015-09-09T13:38:10.782522000 0.440079s notice: Server ready, "Seungchans_MacBook_Pro_local_4nf" f34043e2-b1d4-4018-b3aa-b6c35944bb93
 2015-09-09T13:38:11.127083000 0.784640s notice: A newer version of the RethinkDB server is available: 2.1.3. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2015-09-15T21:38:38.225469000 0.363895s notice: Running rethinkdb 2.0.4 (CLANG 4.2 (clang-425.0.28))...
+2015-09-15T21:38:38.234035000 0.372457s notice: Running on Darwin 14.4.0 x86_64
+2015-09-15T21:38:38.234126000 0.372546s notice: Loading data from directory /Users/seungchanlee/Documents/Projects/cmscubed/rethinkdb_data
+2015-09-15T21:38:38.420901000 0.559321s info: Automatically using cache size of 100 MB
+2015-09-15T21:38:38.420914000 0.559333s warn: Cache size does not leave much memory for server and query overhead (available memory: 913 MB).
+2015-09-15T21:38:38.420932000 0.559351s warn: Cache size is very low and may impact performance.
+2015-09-15T21:38:38.421732000 0.560152s notice: Listening for intracluster connections on port 29015
+2015-09-15T21:38:38.423154000 0.561574s notice: Listening for client driver connections on port 28015
+2015-09-15T21:38:38.423262000 0.561682s notice: Listening for administrative HTTP connections on port 8080
+2015-09-15T21:38:38.423264000 0.561684s notice: Listening on addresses: 127.0.0.1, ::1
+2015-09-15T21:38:38.423268000 0.561687s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2015-09-15T21:38:38.423271000 0.561690s notice: Server ready, "Seungchans_MacBook_Pro_local_4nf" f34043e2-b1d4-4018-b3aa-b6c35944bb93
+2015-09-15T21:38:38.672892000 0.811312s notice: A newer version of the RethinkDB server is available: 2.1.3. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2015-09-16T07:48:29.884194000 7628.204518s notice: Server got SIGINT from pid 215, uid 501; shutting down...
+2015-09-16T07:48:29.884343000 7628.204662s notice: Shutting down client connections...
+2015-09-16T07:48:29.884870000 7628.205189s notice: All client connections closed.
+2015-09-16T07:48:29.884876000 7628.205194s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2015-09-16T07:48:29.892916000 7628.213235s notice: Storage engine shut down.

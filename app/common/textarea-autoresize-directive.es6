@@ -55,6 +55,7 @@
           tab: 9
         };
 
+
         // PURE ///////////////////////////////////////////////////////////////////////////////////////
 
         let log = x => { console.log(x); return x; };
@@ -63,20 +64,23 @@
         // bubble //
         ////////////
 
-        // getClickedElement :: Element (directive root) -> Element
-        let getClickedElement = R.compose(R.invoker(0, 'parent'), R.invoker(0, 'parent'));
+        // getC3RootElement :: Element -> Element
+        let getC3RootElement = R.compose(R.ifElse(R.isNil, R.always(null), R.identity), C.getClosestContainerElementByAttribute('c3-root'));
 
-        // getTextareaElement :: Element (directive root) -> Element
-        let getTextareaElement = R.compose(R.invoker(1, 'querySelectorAll')('.textarea'), R.head);
+        // getClickedElement :: Element -> Element
+        let getClickedElement = R.compose(R.prop('parentNode'), getC3RootElement);
 
-        // getEditorElement :: Element (directive root) -> Element
+        // getTextareaElement :: Element -> Element
+        let getTextareaElement = R.compose(R.head, R.invoker(1, 'querySelectorAll')('.textarea'), getC3RootElement);
+
+        // getEditorElement :: Element -> Element
         // let getEditorElement = R.compose(R.invoker(1, 'querySelectorAll')('.editor'), R.head);
 
         // getBubbleElement :: Element -> Element
-        let getBubbleElement = R.compose(R.invoker(0, 'parent'));
+        let getBubbleElement = R.compose(R.head, R.invoker(1, 'querySelectorAll')('.bubble'), getC3RootElement);
 
         // getBubbleOverlayElement :: Element -> Element
-        let getBubbleOverlayElement = R.compose(R.invoker(1, 'querySelectorAll')('.bubble-overlay'), R.head, R.invoker(0, 'parent'), R.invoker(0, 'parent'));
+        // let getBubbleOverlayElement = R.compose(R.invoker(1, 'querySelectorAll')('.bubble-overlay'), R.head, R.invoker(0, 'parent'), R.invoker(0, 'parent'));
 
         // getWindowWidth :: Window -> Integer
         let getWindowWidth = R.compose(R.prop('innerWidth'));
@@ -146,13 +150,14 @@
           else if (!inLeftHalf && !inTopHalf) { return 'bottomRight'; } 
         });
 
-        // setRelativeBubblePosition :: Element (directive root) -> Element
-        // set the position of the bubble relative to clicked element
+        // setRelativeBubblePosition :: Element (bubble) -> Element
+        // set the position of the bubble relative to c3 root element
         let setRelativeBubblePosition = R.curry(element => {
-          let bubbleElement = R.compose(R.head, getBubbleElement)(element);
-          let clickedElement = R.compose(R.head, getClickedElement)(element);
+          console.log(element);
+          let bubbleElement = element;
+          let c3RootElement = getC3RootElement(element);
 
-          let elementQuadrant = getElementQuadrant(clickedElement);
+          let elementQuadrant = getElementQuadrant(c3RootElement);
           let bubbleTipClasses = ['bubble--top-left', 'bubble--top-right', 'bubble--bottom-left', 'bubble--bottom-right'];
 
           // first reset the classList
@@ -217,183 +222,129 @@
         //////////////
 
         // getMeasurementElement :: Element (directive root) -> Element
-        let getMeasurementElement = R.compose(R.invoker(1, 'querySelectorAll')('.measurement'), R.head);
+        let getMeasurementElement = R.compose(R.head, R.invoker(1, 'querySelectorAll')('.measurement'), getC3RootElement);
 
         // getMeasurementElementMaxWidth :: Element (measurement) -> Integer
-        let getMeasurementElementMaxWidth = R.compose(R.divide(R.__, 3), getWindowWidth, C.getWindowObj, R.head);
+        let getMeasurementElementMaxWidth = R.compose(R.divide(R.__, 3), getWindowWidth, C.getWindowObj);
 
         // setMeasurementElementMaxWidth :: Element (measurement) -> Integer
         let setMeasurementElementMaxWidth = R.curry(element => {
           let maxWidth = getMeasurementElementMaxWidth(element);
-          element[0].style.maxWidth = String(maxWidth) + 'px';
+          element.style.maxWidth = String(maxWidth) + 'px';
           return element;
         });
 
-        // getTextareaTextWidth :: Element (directive root) -> Integer
-        let getTextareaTextWidth = R.compose(R.add(textareaPaddingX), R.prop('offsetWidth'), R.head, getMeasurementElement);
+        // getTextareaTextWidth :: Element (measurement) -> Integer
+        let getTextareaTextWidth = R.compose(R.add(textareaPaddingX), R.prop('offsetWidth'));
 
-        // getTextareaTextMaxWidth :: Element (directive root) -> Integer
-        let getTextareaTextMaxWidth = R.compose(R.add(textareaPaddingX), R.divide(R.__, 3), getWindowWidth, C.getWindowObj, R.head);
+        // getTextareaTextMaxWidth :: Element (measurement) -> Integer
+        let getTextareaTextMaxWidth = R.compose(R.add(textareaPaddingX), R.divide(R.__, 3), getWindowWidth, C.getWindowObj);
 
-        // getTextareaTextHeight :: Element (directive root) -> Integer
-        let getTextareaTextHeight = R.compose(R.add(textareaPaddingY), R.prop('offsetHeight'), R.head, getMeasurementElement);
+        // getTextareaTextHeight :: Element (measurement) -> Integer
+        let getTextareaTextHeight = R.compose(R.prop('offsetHeight'));
 
-        // getTextareaTextMaxHeight :: Element (directive root) -> Integer
-        let getTextareaTextMaxHeight = R.compose(R.add(textareaPaddingY), R.divide(R.__, 3), getWindowHeight, C.getWindowObj, R.head);
+        // getTextareaTextMaxHeight :: Element (measurement) -> Integer
+        let getTextareaTextMaxHeight = R.compose(R.add(textareaPaddingY), R.divide(R.__, 3), getWindowHeight, C.getWindowObj);
 
-        // setMeasurementElementInnerText :: Element (directive root) -> Element
-        let setMeasurementElementInnerText = R.curry((newInnerText, element) => {
-          let measurementElement = R.compose(R.head, getMeasurementElement)(element);
-          measurementElement.innerText = newInnerText;
+        // setMeasurementElementInnerHTML :: Element (measurement) -> Element
+        let setMeasurementElementInnerHTML = R.curry((newInnerHTML, element) => {
+          element.innerHTML = newInnerHTML;
           return element;
         });
 
-        // setTextareaWidth :: Element -> Element
+        // setTextareaWidth :: Element (textarea) -> Element
         let setTextareaWidth = R.curry(element => {
-          let textareaElement = R.compose(R.head, getTextareaElement)(element);
-          let textareaTextWidth = getTextareaTextWidth(element);
-          let textareaMaxWidth = getTextareaTextMaxWidth(element);
+          let measurementElement = getMeasurementElement(element);
+          let textareaTextWidth = getTextareaTextWidth(measurementElement);
+          let textareaMaxWidth = getTextareaTextMaxWidth(measurementElement);
 
-          textareaElement.style.width = String(textareaTextWidth) + 'px';
-          textareaElement.style.maxWidth = String(textareaMaxWidth) + 'px';
+          element.style.width = String(textareaTextWidth) + 'px';
+          element.style.maxWidth = String(textareaMaxWidth) + 'px';
 
           return element;
         });
 
-        // setTextareaHeight :: Element -> Element
+        // setTextareaHeight :: Element (textarea) -> Element
         let setTextareaHeight = R.curry(element => {
-          let textareaElement = R.compose(R.head, getTextareaElement)(element);
-          let textareaTextHeight = getTextareaTextHeight(element);
-          let textareaMaxHeight = getTextareaTextMaxHeight(element);
+          let measurementElement = getMeasurementElement(element);
+          let textareaTextHeight = getTextareaTextHeight(measurementElement);
+          let textareaMaxHeight = getTextareaTextMaxHeight(measurementElement);
 
-          textareaElement.style.height = String(textareaTextHeight) + 'px';
-          textareaElement.style.maxHeight = String(textareaMaxHeight) + 'px';
+          element.style.height = String(textareaTextHeight) + 'px';
+          element.style.maxHeight = String(textareaMaxHeight) + 'px';
 
           return element;
         });
 
-
-        ////////////
-        // editor //
-        ////////////
-
-        // moveCaretToEnd :: 
+        ///////////////////
+        // medium editor //
+        ///////////////////
 
         // getElementTag :: Element -> String
-        let getElementTag = R.compose(R.prop('nodeName'), R.head);
+        let getElementTag = R.prop('nodeName');
 
-        // isSelection :: Element (textarea) -> Boolean
-        let isSelection = R.curry(element => {
-          let selectionStart = R.prop('selectionStart')(element);
-          let selectionEnd = R.prop('selectionEnd')(element);
-          return R.compose(R.gt(0), R.subtract(selectionEnd))(selectionStart);
+        // setMediumEditorOptionToSingleLine :: Element (textarea) -> Element
+        let setMediumEditorOptionToSingleLine = R.curry(element => {
+          element.setAttribute('data-disable-return', 'true');
+          return element;
         });
 
-        // getSelection :: Element -> String
+        // setMediumEditorOptions :: Element (textarea) -> Element
+        let setMediumEditorOptions = R.curry(element => {
+          let clickedElement = getClickedElement(element);
+          let elementTag = getElementTag(clickedElement);
+          if (elementTag === 'SPAN' || elementTag === 'P') {
+            setMediumEditorOptionToSingleLine(element);
+          }
+        });
 
+        // getRange :: Element -> Element
+        let getRange = R.compose(R.invoker(0, 'createRange'), C.getDocumentObj);
 
-        // getSelectionContainerElement :: Element -> Element
-        let getSelectionContainerElement = R.compose(R.prop('commonAncestorContainer'), R.invoker(1, 'getRangeAt')(0), R.invoker(0, 'getSelection'), C.getWindowObj);
+        // getSelection :: Element -> Element
+        let getSelection = R.compose(R.invoker(0, 'getSelection'), C.getWindowObj);
 
-        // getSelecedElement :: Element -> Element
-        let getSelectedElement = R.compose(R.ifElse(R.compose(R.equals(1), R.prop('nodeType')), R.identity, R.prop('parentNode')), getSelectionContainerElement);
-
-        // getCurrentWord :: String -> String
-
-
-        // wrapWithParagraphTag :: String (selection) -> String
-        let wrapWithParagraphTag = R.compose(R.add(R.__, '<p>'), R.add('</p>'));
-
-        // deleteTag :: String -> String
-
-        // removeTag :: String -> String
-        
-
-        // isBold :: String -> String
-
-        // wrapWithBoldTag :: String -> String
-
-        // isItalics :: String -> String
-
-        // wrapWithItalicsTag :: String -> String
-
-        // isUnderline :: String -> String
-
-        // wrapWithUnderlineTag :: String -> String
-
-        // isLeftAligned :: String -> String
-
-        // addLeftAlignedStyle :: String -> String
-
-        // isRightAligned :: String -> String
-
-        // addRightAlignedStyle :: String -> String
-
-        // isCenterAligned :: String -> String
-
-        // addCenterAlignedStyle :: String -> String
-
-        // isHyperLink :: String -> String
-
-        // addHyperLink :: String -> String
-
-        
-
-
-
-
+        // setCursorToEnd :: Element (textarea) -> Element
+        let setCursorToEnd = R.curry(element => {
+          let range = getRange(element);
+          let selection = getSelection(element);
+          range.setStart(element, 1);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+          element.focus();
+          return element;
+        });
 
 
 
 
         // INIT - IMPURE //////////////////////////////////////////////////////////////////////////////
 
-        let textareaElement = R.compose(R.head, getTextareaElement)(element);
-        let bubbleOverlayElement = R.compose(R.head, getBubbleOverlayElement)(element);
-        let bubbleElement = R.compose(R.head, getBubbleElement)(element);
+        let clickedElement = R.compose(getClickedElement, R.head)(element);
+        let bubbleElement = R.compose(getBubbleElement, R.head)(element);
+        let textareaElement = R.compose(getTextareaElement, R.head)(element);
+        let measurementElement = R.compose(getMeasurementElement, R.head)(element);
 
         // Set invisible span element text for use in measuring width and height of text in textarea
         // and then set max width for the measurement element
-        R.compose(C.setInnerText(scope.ngModel), R.head, getMeasurementElement)(element);
-        R.compose(setMeasurementElementMaxWidth, getMeasurementElement)(element);
+        C.setInnerHTML(scope.ngModel)(measurementElement);
+        setMeasurementElementMaxWidth(measurementElement);
 
-        // initialize textarea content
-        // i.e. if the tag is not span or p, wrap the content in p tag (unless it's already HTML)
-        let elementTag = R.compose(getElementTag, getClickedElement)(element);
+        // if the clicked element is SPAN or P, set medium editor to single line input only
+        setMediumEditorOptions(textareaElement);
 
 
         // MAIN - IMPURE //////////////////////////////////////////////////////////////////////////////
         
-        // console.log(R.compose(isInLeftHalfOfWindow, R.head, getBubbleElement)(element));
-        // console.log(C.getWindowObj(getMeasurementElement(element)[0]));
-        // console.log(R.compose(getElementRect, R.head, getClickedElement)(element));
         // console.log(element);
         // console.log(textareaElement);
 
-        // TODO: update the width on paste (or calculate the text width after the paste somehow?)
-
-        // Keyup deals with editor functionality (i.e. selection requires keyup & mouseup)
-        angular.element(textareaElement).on('keyup', event => {
-          console.log('key entered: ', event.which);
-          switch (event.which) {
-            case keycodes.enter: 
-              // wrapWithParagraphTag
-              break;
-            case keycodes.delete: 
-              break;
-          }
-        });
-
         // Keydown deals with textarea submit events
         angular.element(textareaElement).on('keydown', event => {
-          // console.log('key entered: ', event.which);
-          // console.log('command key: ', event);
-          // console.log('start: ', element[0].selectionStart, 'end: ', element[0].selectionEnd);
           switch (event.which) {
             case keycodes.enter: 
-              // wrapWithParagraphTag
-              break;
-            case keycodes.delete: 
+              // submit on cmd + enter
               break;
             case keycodes.esc:
               c3Ctrl.closeBubble();
@@ -407,26 +358,23 @@
           if (newVal === true) {
             // Timeout required to wait until reflow process ends and getBoundingClientRect is available
             $timeout(() => {
-              // Set focus to textarea
-              textareaElement.focus();
+              // Set focus to textarea and put the cursor at the end of the content
+              setCursorToEnd(textareaElement);
 
               // TODO: click outside the bubble to close the bubble
 
               scope.$watch('c3Model', (newVal, oldVal) => {
                 console.log('watch ran - new val:', newVal);
-                // console.log($window.document.getSelection().getRangeAt(0));
-                // console.log('selected element nodeType: ', R.compose(R.prop('nodeType'), getSelectionContainerElement)(textareaElement));
-                // console.log('selected element: ', getSelectedElement(textareaElement));
 
                 // adjust span element text
-                setMeasurementElementInnerText(newVal, element);
+                setMeasurementElementInnerHTML(newVal, measurementElement);
 
                 // set width and height of the textarea
-                setTextareaWidth(element);
-                setTextareaHeight(element);
+                setTextareaWidth(textareaElement);
+                setTextareaHeight(textareaElement);
 
                 // set bubble position and orientation (including the bubble tip and editor)
-                setRelativeBubblePosition(element);
+                setRelativeBubblePosition(bubbleElement);
               });
             },0);
           }

@@ -21,7 +21,7 @@
     .module('common')
     .directive('c3', c3);
 
-  function c3() {
+  function c3(R) {
     return {
       restrict: 'A',
       scope: {
@@ -29,8 +29,6 @@
         c3RepeatModel: '=?'
       },
       templateUrl: 'common/c3-directive.tpl.html',
-      replace: false,
-      transclude: true,
       controllerAs: 'c3',
       controller() {
         /* jshint unused:false */
@@ -44,13 +42,26 @@
         /* jshint unused:false */
         /* eslint "no-unused-vars": [2, {"args": "none"}] */
 
-        // let textareaElement = element[0].getElementsByTagName('textarea');
-        // textareaElement[0].setAttribute('ng-model', attrs.c3Model);
+        // PURE /////////////////////////////////////////////////////////////////////////////////
 
-        // if (attrs.c3RootRepeat !== undefined) {
-        //   textareaElement[0].setAttribute('c3-repeat-model', attrs.c3RootRepeat);
-        // }
+        // getOriginalScopeValueElement :: Element (directive root) -> Element
+        // get the new element where original scope value is placed
+        let getOriginalScopeValueElement = R.compose(R.invoker(1, 'querySelectorAll')('.c3-original-scope-value'), R.head);
+
+
+        // INIT /////////////////////////////////////////////////////////////////////////////////
+        
+        let originalScopeValueElement = getOriginalScopeValueElement(element);
+
+
+        // MAIN /////////////////////////////////////////////////////////////////////////////////
+
         if (!scope.c3Model) { return; }
+
+        scope.$watch('c3Model', (newVal, oldVal) => {
+          angular.element(originalScopeValueElement).html(newVal);
+        });
+        
         // console.log('scope.c3Model: ', scope.c3Model);
 
       }

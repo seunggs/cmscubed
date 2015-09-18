@@ -23,10 +23,9 @@
 
   function c3Page($state, $templateCache, $window, R, $compile, $timeout, C3PageService) {
     return {
-      restrict: 'EA',
+      restrict: 'A',
       scope: {},
       templateUrl: 'common/c3-page-directive.tpl.html',
-      replace: false,
       compile(tElement, tAttrs) {
         /* jshint unused:false */
         /* eslint "no-unused-vars": [2, {"args": "none"}] */

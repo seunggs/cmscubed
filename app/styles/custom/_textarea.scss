@@ -12,4 +12,10 @@
 	margin: 0;
 	min-width: 4rem;
 	min-height: 2rem;
+	overflow: auto;
+}
+
+.c3.textarea p, .c3.measurement p {
+	margin-top: 0;
+	margin-bottom: 0.15rem;
 }
