@@ -3,7 +3,7 @@
   "ignore": [
     ".git",
     "node_modules/**/*",
-    "app",
+    // "app",
     "bower_components",
     "e2e",
     "gulp",

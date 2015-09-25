@@ -12,9 +12,11 @@
       'ngSanitize',
       'ramda',
       'angular-medium-editor',
+      'btford.socket-io',
       'home',
       'common'
-    ]);
+    ])
+    .constant('WEBSOCKET_URL', 'ws://localhost:8000');
 
   // ramda module
   angular.module('ramda', []);

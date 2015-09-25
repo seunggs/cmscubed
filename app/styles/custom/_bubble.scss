@@ -1,4 +1,8 @@
 .c3.bubble {
+	font-size: 1.1rem;
+  font-weight: $body-font-weight;
+  letter-spacing: $body-letter-spacing;
+  line-height: $line-height;
 	position: absolute;
 	background-color: $white;
 	min-width: 14rem;

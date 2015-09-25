@@ -49,13 +49,13 @@ app.use('/', require('./server/routes'));
 
 
 /* --- start scoket.io --------------------------------------------- */
-io.on('connection', function(socket){
+io.on('connection', function connection (socket) {
   console.log('user connected');
-  socket.on('disconnect', function(){
+  socket.on('close', function() {
     console.log('user disconnected');
   });
 });
-require('./router/socket')(io);
+require('./server/routes/socket')(io);
 
 /* --- start app --------------------------------------------------- */
 server.listen(port);

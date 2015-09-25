@@ -24,7 +24,7 @@
     "rethinkdb": "^2.0.2",
     "rethinkdbdash": "^2.0.16",
     "serve-favicon": "^2.3.0",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.7"
   },
   "devDependencies": {
     "browser-sync": "^2.2.3",

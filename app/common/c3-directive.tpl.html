@@ -1,5 +1,5 @@
 <!-- <span ng-transclude class="c3 hover" ng-click="c3.openBubble()"></span> -->
-<div class="c3 c3-original-scope-value hover" style="display: inline-block" ng-click="c3.openBubble()">{{c3Model}}</div>
+<div class="c3 c3-original-scope-value hover" style="display: inline-block" ng-click="c3.openBubble()"></div>
 
 <!-- overlay -->
 <!-- <div class="bubble-overlay fixed top-0 right-0 bottom-0 left-0" style="z-index: 9999" ng-show="c3.bubbleVisible" ng-click="c3.closeBubble()">
@@ -10,7 +10,7 @@
 <div class="c3 bubble flex flex-start" style="z-index: 1000" ng-show="c3.bubbleVisible">
 	<textarea-autoresize class="flex-auto" ng-model="c3Model"></textarea-autoresize>
   <div style="width: 5.6rem" class="flex">
-    <button class="btn btn-green btn-sm ml1 mt1 mb1" type="button" ng-click="c3.submit()" ng-enter="c3.submit()"><span class="ti-check"></span></button>
+    <button class="btn btn-green btn-sm ml1 mt1 mb1" type="button" ng-click="c3.submit(c3Model)"><span class="ti-check"></span></button>
     <button class="btn btn-red-outline btn-sm m1" type="button" ng-click="c3.closeBubble()"><span class="ti-close"></span></button>
   </div>
 </div>

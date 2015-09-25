@@ -17,9 +17,15 @@
     
     // CONFIG ////////////////////////////////////////////////////////////////////////////////////
     
-    let baseFontSize = 17.6;
+    let baseFontSize = 16 * 1.1;
 
     // MAIN //////////////////////////////////////////////////////////////////////////////////////
+
+    // log :: a -> a
+    let log = R.curry(x => { console.log(x); return x; });
+
+    // printError :: String -> String
+    let printError = err => { console.log('Something went wrong: ', err); return err; };
 
     // getWindowObj :: Element -> Window
     let getWindowObj = R.compose(R.path(['ownerDocument', 'defaultView']));
@@ -42,9 +48,8 @@
       return element; 
     });
 
-    // getClosestContainerElementByAttribute :: String (attribute name) -> Element -> Element
+    // getClosestContainerElementByAttribute :: String -> Element -> Element
     let getClosestContainerElementByAttribute = R.curry((attributeName, element) => {
-      console.log(element);
       if (!element.hasAttribute(attributeName)) {
         if (element.parentNode !== null) {
           return getClosestContainerElementByAttribute(attributeName, element.parentNode);
@@ -55,6 +60,8 @@
     });
 
     CBase = {
+      log: log,
+      printError: printError,
       getWindowObj: getWindowObj,
       getDocumentObj: getDocumentObj,
       convertEmToPx: convertEmToPx,

@@ -6,7 +6,11 @@ var router = express.Router();
 var r = require('../config/rdbdash');
 
 
-// Users routes ///////////////////////////////////////////////////////
+/* -- HELPER FUNCTIONS - PURE -------------------------------------------- */
+
+
+
+/* -- Users routes ------------------------------------------------------- */
 
 router.route('/users')
 
@@ -24,7 +28,7 @@ router.route('/users')
 
 router.route('/users/:userId')
 
-	// GET :: Params -> {user}
+	// GET :: Params -> {a}
 	.get(function (req, res) {
 		var userId = req.params.userId;
 
@@ -39,7 +43,7 @@ router.route('/users/:userId')
 			});
 	})
 
-	// PUT :: Params -> {user} -> {dbRes}
+	// PUT :: Params -> {a} -> {dbRes}
 	.put(function (req, res) {
 		var userId = req.params.userId;
 		var userUpdate = req.body;
@@ -56,6 +60,31 @@ router.route('/users/:userId')
 			});
 	});
 
-//
+
+/* -- Content routes ----------------------------------------------------- */
+
+router.route('/content/:page/:field')
+
+	// GET :: Params -> {a}
+	.get(function (req, res) {
+		var pageName = req.params.page;
+		var fieldName = req.params.field;
+		console.log('pageName: ', pageName);
+		console.log('fieldName: ', fieldName);
+
+		r.table('content')
+			.getAll(pageName, { index: 'page' })
+			.filter({ field: fieldName })
+			.run()
+			.then(function (dbRes) {
+				res.send(dbRes);
+			})
+			.catch(function (err) {
+				res.send(err);
+			});
+	});
+
+
+/* -- EXPORT ------------------------------------------------------------- */
 
 module.exports = router;

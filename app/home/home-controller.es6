@@ -7,9 +7,10 @@
       let vm = this;
 
       vm.$cms = {};
+      vm.$cms.wrap = {};
 
-      vm.$cms.text = 'text example';
-      vm.$cms.text2 = 'text example 2';
+      vm.$cms.wrap.text = 'text example';
+      vm.$cms.wrap.text2 = 'text example 2';
       
       vm.$cms.list = [1, 2, 3, 4, 5];
       vm.$cms.list2 = ['a', 'b', 'c'];

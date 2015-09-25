@@ -21,7 +21,7 @@
     .module('common')
     .directive('c3Page', c3Page);
 
-  function c3Page($state, $templateCache, $window, R, $compile, $timeout, C3PageService) {
+  function c3Page($state, $templateCache, $window, R, $compile, $timeout, C3Page) {
     return {
       restrict: 'A',
       scope: {},
@@ -30,51 +30,57 @@
         /* jshint unused:false */
         /* eslint "no-unused-vars": [2, {"args": "none"}] */
 
-        // INIT - IMPURE //////////////////////////////////////////////////////////////////////////
+        /* -- INIT - IMPURE ------------------------------------------------------------------- */
 
-        // get html of this state's template from cache
+        // Get html of this state's template from cache
+        // This is required to grab the expression scope names from markup
         let pageHtml = $templateCache.get($state.current.templateUrl);
         pageHtml = pageHtml[0] === 200 ? pageHtml[1] : null;
         if (pageHtml === null) { return; }
         // console.log(pageHtml);
 
-        // parse the html into DOM
+        // parse the html into DOM to make it easier to manipulate the markup
         let DOMParser = new $window.DOMParser();
         let pageDOM = DOMParser.parseFromString(pageHtml, 'text/html').documentElement.childNodes[1].childNodes[0];
 
-        // put span around every {{ }} in innerText so we can select it as elements later
+        // Put span around every {{ }} in innerText so we can select it as elements later
         // Excludes expressions in attributes; i.e. placeholder="{{ }}"
-        let ngExpressionElements = C3PageService.getNgExpressionElements(pageDOM);
+        let ngExpressionElements = C3Page.getNgExpressionElements(pageDOM);
         R.forEach(element => {
-          element.innerHTML = C3PageService.wrapSpan(element.innerHTML);
+          element.innerHTML = C3Page.wrapSpan(element.innerHTML);
         })(ngExpressionElements);
 
 
-        // MAIN - IMPURE //////////////////////////////////////////////////////////////////////////
+        /* -- MAIN - IMPURE ------------------------------------------------------------------- */
 
         /////////////
         // c3-text //
         /////////////
 
-        let cmsExpressionElements = C3PageService.getCmsExpressionElements(pageDOM);
-        C3PageService.addCmsTextAttribute(cmsExpressionElements);
-        // console.log(C3PageService.getCmsExpressionElements(pageDOM));
+        let c3ExpressionElements = C3Page.getCmsExpressionElements(pageDOM);
+        c3ExpressionElements.forEach(element => {
+          C3Page.addCmsTextAttribute(element);
+        });
+        // console.log(C3Page.getCmsExpressionElements(pageDOM));
 
 
         ///////////////
         // c3-repeat //
         ///////////////
 
-        var rootCmsRepeatElements = C3PageService.getRootCmsRepeatElements(pageDOM);
-        C3PageService.addCmsRepeatAttribute(rootCmsRepeatElements);
+        var rootCmsRepeatElements = C3Page.getRootCmsRepeatElements(pageDOM);
+        rootCmsRepeatElements.forEach(element => {
+          C3Page.setC3RootRepeatAttribute(element);
+          C3Page.addCmsRepeatAttribute(element);
+        });
         // console.log(rootCmsRepeatElements);
-
+        
 
         //////////////////
         // compile page //
         //////////////////
 
-        let finalPageHtml = C3PageService.convertDOMToString(pageDOM);
+        let finalPageHtml = C3Page.convertDOMToString(pageDOM);
         // console.log(finalPageHtml);
 
         return {
