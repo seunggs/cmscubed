@@ -32,7 +32,7 @@
       require: ['^c3'],
       controllerAs: 'textareaAutoresize',
       controller() {
-        let vm = this;
+        // let vm = this;
       },
       link(scope, element, attrs, ctrls) {
         /* jshint unused:false */
@@ -68,19 +68,15 @@
 
         /* -- MAIN - IMPURE ------------------------------------------------------------------------- */
         
-        // console.log(element);
-        // console.log(textareaElement);
-
         // Keydown deals with textarea submit events
         angular.element(textareaElement).on('keydown', event => {
-          switch (event.which) {
-            case keycodes.enter: 
-              // submit on cmd + enter
-              break;
-            case keycodes.esc:
-              c3Ctrl.closeBubble();
-              scope.$apply();
-              break;
+          if (event.which === keycodes.enter && (event.metaKey || event.ctrlKey)) { 
+            // cmd + Enter (on Mac) ctrl + Enter (on Windows) -> Submit data
+            c3Ctrl.submit();
+            scope.$apply();
+          } else if (event.which === keycodes.esc) {
+            c3Ctrl.closeBubble();
+            scope.$apply();
           }
         });
 
@@ -97,10 +93,10 @@
               scope.$watch('c3Model', (newVal, oldVal) => {
                 console.log('watch ran - new val:', newVal);
 
-                // adjust span element text
+                // adjust measurement span element text so that width of the bubble can be calculated
                 TextareaAutoresize.setMeasurementElementInnerHTML(newVal, measurementElement);
 
-                // set width and height of the textarea
+                // set width and height of the textarea ased on the measurement element
                 TextareaAutoresize.setTextareaWidth(textareaElement);
                 TextareaAutoresize.setTextareaHeight(textareaElement);
 

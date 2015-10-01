@@ -147,3 +147,30 @@
 2015-09-24T05:56:46.030579000 0.417025s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
 2015-09-24T05:56:46.030610000 0.417056s notice: Server ready, "Seungchans_MacBook_Pro_local_4nf" f34043e2-b1d4-4018-b3aa-b6c35944bb93
 2015-09-24T05:56:46.300903000 0.687349s notice: A newer version of the RethinkDB server is available: 2.1.4. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2015-09-26T10:10:37.541242000 28539.722129s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:10:43.281858000 28545.463080s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:11:04.247579000 28566.430172s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:11:46.241181000 28608.426445s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:12:01.254357000 28623.440578s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:12:15.264965000 28637.452077s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:12:36.253836000 28658.442318s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:13:10.260806000 28692.451480s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:13:18.242096000 28700.433248s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:14:42.229417000 28784.425981s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:15:51.234417000 28853.435363s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:17:23.242093000 28945.448931s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:21:13.215928000 29175.437563s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:22:45.192115000 29267.419642s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:31:57.194579000 29819.457534s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:33:29.179937000 29911.448788s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:53:18.085663000 31100.430837s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T10:54:50.070708000 31192.421643s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T11:38:59.457347000 32580.488703s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T11:39:00.388769000 32581.420194s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T12:22:40.315391000 33648.487955s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T12:22:55.272561000 33663.446156s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T13:05:22.140626000 36210.477781s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T13:05:37.092662000 36225.430781s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T13:48:08.459544000 38380.436081s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T14:30:50.321038000 40942.463693s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.
+2015-09-26T15:13:32.117570000 43504.426435s notice: Someone asked for the nonwhitelisted file "/announce.php".  If this should be accessible, add it to the static web assets.

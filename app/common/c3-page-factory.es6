@@ -12,7 +12,7 @@
     .module('common')
     .factory('C3Page', C3Page);
 
-  function C3Page(R) {
+  function C3Page(R, $http, Config, C) {
     
     let C3PageBase = {};
     
@@ -21,9 +21,43 @@
     // wrapSpan :: String -> String
     let wrapSpan = R.compose(R.replace(/\}\}/g, '}}</span>'), R.replace(/\{\{/g, '<span>{{'));
 
+    // getPageHtml :: {a} ($templateCache) -> {a} ($injector) -> String
+    let getPageHtml = R.curry((templateCache, injector) => {
+      let templateUrl = R.compose(R.prop('templateUrl'), C.getCurrentState)(injector);
+      let pageHtml = templateCache.get(templateUrl);
+      return pageHtml[0] === 200 ? pageHtml[1] : null;
+    });
+
     // convertDOMToString :: DOM -> String
     // 'inner' part is important because with outerHTML, we get infinite loop during $compile
     let convertDOMToString = R.prop('innerHTML'); 
+
+
+    /* -- c3-page --------------------------------------------------------------------------------- */
+
+    // getC3PageName :: Element -> String
+    let getC3PageName = R.compose(R.invoker(1, 'getAttribute')('c3-page'), R.head, R.invoker(1, 'querySelectorAll')('[c3-page]'), C.getDocumentObj);
+
+    // getC3PageElement :: Element -> Element
+    let getC3PageElement = R.compose(R.head, R.invoker(1, 'querySelectorAll')('[c3-page]'), C.getDocumentObj);
+
+    // getC3PageScope :: Element -> {a}
+    let getC3PageScope = R.compose(C.getElementScope, getC3PageElement);
+
+    // getC3PageControllerName :: {a} ($injector) -> String || null
+    let getC3PageControllerName = R.compose(R.ifElse(R.isNil, R.always(null), R.identity), R.prop('controllerAs'), C.getCurrentState);
+
+    // getC3PageControllerScope :: {a} ($injector) -> Element -> {a}
+    let getC3PageControllerScope = R.curry((injector, element) => {
+      let c3PageControllerName = getC3PageControllerName(injector);
+      if (R.isNil(c3PageControllerName)) {
+        // no controllerAs
+        return R.compose(R.invoker(0, 'controller'), R.apply(angular.element), R.of, getC3PageElement)(element);
+      } else {
+        // controllerAs
+        return R.compose(R.createMapEntry(c3PageControllerName), R.invoker(0, 'controller'), R.apply(angular.element), R.of, getC3PageElement)(element);
+      }
+    });
 
 
     /* -- c3-text -------------------------------------------------------------------------------- */
@@ -50,7 +84,7 @@
     let retrieveExpressionModel = R.compose(R.trim, R.replace('{{', ''), R.replace('}}', ''));
 
     // hasCmsExpressionInInnerText :: Element -> Boolean
-    let hasCmsExpressionInInnerText = R.compose(R.gt(R.__, -1), R.indexOf('$cms'), R.prop('innerText'));
+    let hasCmsExpressionInInnerText = R.compose(R.gt(R.__, -1), R.indexOf('cms$'), R.prop('innerText'));
 
     // getCmsExpressionElements :: Element -> [Element]
     let getCmsExpressionElements = R.compose(R.filter(hasCmsExpressionInInnerText), getInnerMostNgExpressionElements);
@@ -80,9 +114,12 @@
 
     /* -- c3-repeat ------------------------------------------------------------------------------ */
 
-    // Naming conventions: 
-    // ngRepeatValue => 'repeatItem in repeatModel'
-    // If array => repeatItem in repeatModel; if obj => (repeatItemKey, repeatItemValue) in RepeatModel
+    /*
+      NAMING CONVENTIONS: 
+      ngRepeatValue => 'repeatItemValue in repeatModel'
+      1) If array => repeatItemValue in repeatModel 
+      2) If obj => (repeatItemKey, repeatItemValue) in RepeatModel
+     */
 
     // getNgRepeatElements :: Element -> [Element]
     let getNgRepeatElements = R.invoker(1, 'querySelectorAll')('[ng-repeat]');
@@ -91,7 +128,7 @@
     let retrieveNgRepeatValue = R.invoker(1, 'getAttribute')('ng-repeat');
 
     // containsCms :: String -> Boolean
-    let containsCms = R.compose(R.gt(R.__, -1), R.indexOf('$cms'));
+    let containsCms = R.compose(R.gt(R.__, -1), R.indexOf('cms$'));
 
     // isCmsRepeatElement :: Element -> Boolean
     let isCmsRepeatElement = R.compose(containsCms, retrieveNgRepeatValue);
@@ -183,17 +220,43 @@
     });
 
 
+    /* -- content -------------------------------------------------------------------------------- */
+
+    // initC3PageContent :: {a} ($injector) -> String (page name) -> Element -> Promise ({dbRes})
+    let initC3PageContent = R.curry((injector, pageName, element) => {
+      let c3PageControllerScope = getC3PageControllerScope(injector, element);
+      return $http.post(Config.hostName + '/api/content/' + pageName, c3PageControllerScope);
+    });
+
+    // getC3PageContent :: String (page name) -> Promise ([a])
+    let getC3PageContent = R.curry(pageName => {
+      return $http.get(Config.hostName + '/api/content/' + pageName);
+    });
+
+
     /* -- EXPORT --------------------------------------------------------------------------------- */
     
     C3PageBase = {
       wrapSpan: wrapSpan,
+      getPageHtml: getPageHtml,
       convertDOMToString: convertDOMToString,
+      getC3PageName: getC3PageName,
+      getC3PageElement: getC3PageElement,
+      getC3PageScope: getC3PageScope,
+      getC3PageControllerName: getC3PageControllerName,
+      getC3PageControllerScope: getC3PageControllerScope,
       getNgExpressionElements: getNgExpressionElements,
       getCmsExpressionElements: getCmsExpressionElements,
       addCmsTextAttribute: addCmsTextAttribute,
+      retrieveNgRepeatValue: retrieveNgRepeatValue,
+      retrieveRepeatItemKey: retrieveRepeatItemKey,
+      retrieveRepeatItemValue: retrieveRepeatItemValue,
+      retrieveRepeatModel: retrieveRepeatModel,
       getRootCmsRepeatElements: getRootCmsRepeatElements,
       setC3RootRepeatAttribute: setC3RootRepeatAttribute,
-      addCmsRepeatAttribute: addCmsRepeatAttribute
+      addCmsRepeatAttribute: addCmsRepeatAttribute,
+      initC3PageContent: initC3PageContent,
+      getC3PageContent: getC3PageContent
     };
 
     return C3PageBase;

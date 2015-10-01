@@ -21,28 +21,24 @@ module.exports = function (io) {
 			console.log('field update data: ', data);
 			// var userName = data.user;
 			var pageName = data.page;
-			var fieldName = data.field;
 			var content = data.content;
 
 			// TODO: switch over to multi-indexes for user, page, and field for faster retrieval
 			// Check if the record exists first, if so, insert; otherwise update
 			r.table('content')
 				.getAll(pageName, { index: 'page' })
-			  .filter({ field: fieldName })
 				.run()
 				.then(function (dbRes) {
 					if (R.isEmpty(dbRes)) {
 						return r.table('content')
 							.insert({
 								page: pageName,
-								field: fieldName,
 								content: content
 							}, { returnChanges: true })
 							.run();
 					} else {
 						return r.table('content')
 							.getAll(pageName, { index: 'page' })
-							.filter({ field: fieldName })
 							.update({ content: content }, { returnChanges: true })
 							.run();
 					}

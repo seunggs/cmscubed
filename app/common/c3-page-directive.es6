@@ -21,11 +21,53 @@
     .module('common')
     .directive('c3Page', c3Page);
 
-  function c3Page($state, $templateCache, $window, R, $compile, $timeout, C3Page) {
+  function c3Page($injector, $templateCache, $window, R, $compile, $timeout, C3Page, $rootScope, C) {
     return {
       restrict: 'A',
       scope: {},
       templateUrl: 'common/c3-page-directive.tpl.html',
+      controllerAs: 'c3Page',
+      controller($element, $scope) {
+        /* jshint unused:false */
+        /* eslint "no-unused-vars": [2, {"args": "none"}] */
+
+        let vm = this;
+
+        /* -- INIT - IMPURE ------------------------------------------------------------------- */
+
+        // TODO: add loading and page block with overlay until vm.pageReady is true (which happens when content is loaded from DB)
+        vm.pageReady = false;
+
+        let c3PageName = R.compose(C3Page.getC3PageName, R.head)($element);
+        let c3PageControllerName = C3Page.getC3PageControllerName($injector);
+
+        // TODO: save the page's entire scope if the entry doesn't already exist in DB
+        C3Page.initC3PageContent($injector, c3PageName, R.head($element))
+          .then(dbRes => {
+            console.log('init page dbRes: ', dbRes);
+          })
+          .catch(C.printError);
+
+
+        /* -- MAIN - IMPURE ------------------------------------------------------------------- */
+
+        // Load content from DB
+        C3Page.getC3PageContent(c3PageName)
+          .then(res => {
+            let pageContent = angular.fromJson(res).data[0];
+            console.log('pageContent: ', pageContent);
+            
+            if (!R.isNil(pageContent)) {
+              // TODO: Is this the best way to handle this? Will using $parent work on nested controllers (i.e. ng-include)?
+              // overwrite the page scope with content from db
+              $scope.$parent[c3PageControllerName] = pageContent.content[c3PageControllerName];
+            }
+
+            vm.pageReady = true;
+          })
+          .catch(C.printError);
+
+      },
       compile(tElement, tAttrs) {
         /* jshint unused:false */
         /* eslint "no-unused-vars": [2, {"args": "none"}] */
@@ -34,8 +76,7 @@
 
         // Get html of this state's template from cache
         // This is required to grab the expression scope names from markup
-        let pageHtml = $templateCache.get($state.current.templateUrl);
-        pageHtml = pageHtml[0] === 200 ? pageHtml[1] : null;
+        let pageHtml = C3Page.getPageHtml($templateCache, $injector);
         if (pageHtml === null) { return; }
         // console.log(pageHtml);
 
@@ -68,13 +109,13 @@
         // c3-repeat //
         ///////////////
 
-        var rootCmsRepeatElements = C3Page.getRootCmsRepeatElements(pageDOM);
+        let rootCmsRepeatElements = C3Page.getRootCmsRepeatElements(pageDOM);
         rootCmsRepeatElements.forEach(element => {
           C3Page.setC3RootRepeatAttribute(element);
           C3Page.addCmsRepeatAttribute(element);
         });
         // console.log(rootCmsRepeatElements);
-        
+
 
         //////////////////
         // compile page //

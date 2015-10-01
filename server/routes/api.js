@@ -4,10 +4,10 @@
 var express = require('express');
 var router = express.Router();
 var r = require('../config/rdbdash');
+var R = require('ramda');
 
 
 /* -- HELPER FUNCTIONS - PURE -------------------------------------------- */
-
 
 
 /* -- Users routes ------------------------------------------------------- */
@@ -63,21 +63,43 @@ router.route('/users/:userId')
 
 /* -- Content routes ----------------------------------------------------- */
 
-router.route('/content/:page/:field')
+router.route('/content/:page')
 
-	// GET :: Params -> {a}
+	// GET :: Params -> {dbRes}
 	.get(function (req, res) {
 		var pageName = req.params.page;
-		var fieldName = req.params.field;
-		console.log('pageName: ', pageName);
-		console.log('fieldName: ', fieldName);
 
 		r.table('content')
 			.getAll(pageName, { index: 'page' })
-			.filter({ field: fieldName })
 			.run()
 			.then(function (dbRes) {
 				res.send(dbRes);
+			})
+			.catch(function (err) {
+				res.send(err);
+			});
+	})
+
+	// POST :: Params -> {a} -> {dbRes};
+	.post(function (req, res) {
+		var pageName = req.params.page;
+		var initialContent = req.body;
+
+		r.table('content')
+			.getAll(pageName, { index: 'page' })
+			.run()
+			.then(function (dbRes) {
+				if (R.isEmpty(dbRes)) {
+					return r.table('content')
+						.insert({
+							page: pageName,
+							content: initialContent
+						}, { returnChanges: true })
+						.run();
+				}
+			})
+			.then(function (dbRes) {
+				res.json(dbRes);
 			})
 			.catch(function (err) {
 				res.send(err);
